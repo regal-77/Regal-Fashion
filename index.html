@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Regal Fashion – Ladies Tailoring & Embroidery</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--plum:#14284b;--plum2:#1f3a6b;--gold:#b8923f;--gold2:#e6d4a6;--bg:#f4f6fa;--card:#fff;--ink:#1c2430;--mut:#667085;--line:#dfe5ee;--ok:#1f7a4d;--warn:#b86e0a;--bad:#b3261e}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);font-size:14px}
+#app{display:flex;height:100vh}
+aside{width:232px;background:linear-gradient(180deg,var(--plum),#0b1a35);color:#fff;display:flex;flex-direction:column;flex-shrink:0}
+.brand{padding:20px 18px 14px;border-bottom:1px solid rgba(255,255,255,.12)}
+.brand b{font-family:Georgia,serif;font-size:22px;letter-spacing:1px;color:var(--gold2);display:block}
+.brand span{font-size:11px;opacity:.75;letter-spacing:.5px}
+nav{flex:1;padding:10px 8px;overflow:auto}
+nav button{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:none;border:0;color:#d8e1f0;padding:11px 12px;border-radius:8px;font-size:14px;cursor:pointer;margin-bottom:2px}
+nav button:hover{background:rgba(255,255,255,.08)}
+nav button.on{background:var(--gold);color:#14213d;font-weight:600}
+.side-foot{padding:12px 16px;font-size:11px;opacity:.7;border-top:1px solid rgba(255,255,255,.12)}
+main{flex:1;overflow:auto;padding:24px 28px}
+h1{font-family:Georgia,serif;font-size:26px;margin:0 0 4px;color:var(--plum)}
+.sub{color:var(--mut);margin-bottom:18px}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.bar .sp{flex:1}
+input,select,textarea{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--gold2);border-color:var(--gold)}
+.bar input,.bar select{width:auto;min-width:160px}
+button.btn{background:var(--plum);color:#fff;border:0;padding:9px 16px;border-radius:8px;cursor:pointer;font:inherit;font-weight:600}
+button.btn:hover{background:var(--plum2)}
+button.gold{background:var(--gold);color:#14213d}
+button.ghost{background:#fff;color:var(--plum);border:1px solid var(--line)}
+button.danger{background:#fff;color:var(--bad);border:1px solid #efc9c6}
+button.sm{padding:5px 10px;font-size:12px}
+.grid{display:grid;gap:14px}
+.stats{grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin-bottom:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:0 1px 3px rgba(20,40,75,.05)}
+.stat .n{font-family:Georgia,serif;font-size:28px;color:var(--plum)}
+.stat .l{color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.6px}
+.stat.warn .n{color:var(--warn)}.stat.bad .n{color:var(--bad)}.stat.ok .n{color:var(--ok)}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th{background:#e9eef6;text-align:left;padding:10px 12px;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--plum)}
+td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:middle}
+tr.click:hover td{background:#f4f7fc;cursor:pointer}
+td.r,th.r{text-align:right}
+.pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:600;background:#eee;color:#555;white-space:nowrap}
+.s-Quotation{background:#e8ecf8;color:#5b3a86}.s-Confirmed{background:#e3eefb;color:#1d5aa0}
+.s-Embroidery{background:#fdf0dc;color:#a05a14}.s-Stitching{background:#fdf3d5;color:#8a6a0a}
+.s-Ready{background:#dff3e6;color:#1f7a45}.s-Delivered{background:#e6e6e6;color:#444}.s-Cancelled{background:#f9dcda;color:#a02a24}
+.cards{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.dcard{padding:0;overflow:hidden;cursor:pointer}
+.dcard:hover{box-shadow:0 4px 14px rgba(20,40,75,.15)}
+.dcard .ph{height:170px;background:#e8edf5 center/cover no-repeat;display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:12px}
+.dcard .bd{padding:10px 12px}
+.dcard .m{font-weight:700;color:var(--plum);font-size:16px}
+.muted{color:var(--mut)}.small{font-size:12px}
+.modal-bg{position:fixed;inset:0;background:rgba(8,18,40,.55);display:flex;align-items:flex-start;justify-content:center;padding:30px 16px;overflow:auto;z-index:50}
+.modal{background:#fff;border-radius:14px;width:100%;max-width:880px;padding:22px 24px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.modal.narrow{max-width:560px}
+.modal h2{margin:0 0 14px;font-family:Georgia,serif;color:var(--plum)}
+.f{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-bottom:12px}
+.f label{display:block;font-size:12px;color:var(--mut);margin-bottom:3px;font-weight:600}
+.f .full{grid-column:1/-1}
+.item{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px;background:#f8fafd}
+.item .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-weight:700;color:var(--plum)}
+.meas{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:8px}
+.meas label{font-size:11px;color:var(--mut);display:block}
+.tot{display:flex;justify-content:flex-end;gap:26px;margin:10px 0;font-size:15px}
+.tot b{font-family:Georgia,serif;font-size:18px;color:var(--plum)}
+.actions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
+.toast{position:fixed;bottom:22px;right:22px;background:var(--plum);color:#fff;padding:11px 18px;border-radius:10px;z-index:99;box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.empty{text-align:center;padding:40px;color:var(--mut);background:#fff;border:1px dashed var(--line);border-radius:12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.list-row{display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid var(--line)}
+.list-row:first-child{border-top:0}
+.alert{background:#fff4e0;border:1px solid #f0d49a;color:#7a4e08;padding:10px 14px;border-radius:10px;margin-bottom:14px}
+.internal{background:#eef3fb;border:1px dashed #9fb3d6;border-radius:8px;padding:10px;margin:8px 0}
+.bill{font-family:Georgia,"Times New Roman",serif;color:#1c2430;font-size:12.5px;padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.bill *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.bill .hdr{background:#14284b;color:#e6d4a6;text-align:center;padding:18px 10px 14px;border-bottom:4px solid #b8923f}
+.bill .hdr .en{font-size:30px;letter-spacing:9px;font-weight:400;color:#f3e6bf}
+.bill .hdr .ar{font-family:"Segoe UI",Arial,sans-serif;font-size:15px;margin:3px 0 2px;color:#e6d4a6}
+.bill .hdr .ds{font-family:"Segoe UI",Arial,sans-serif;font-size:10.5px;letter-spacing:4px;color:#fff;margin-top:4px}
+.bill .hdr .ph{font-family:"Segoe UI",Arial,sans-serif;font-size:11.5px;color:#d8e1f0;margin-top:8px;letter-spacing:.5px}
+.bill .gold{height:2px;background:#b8923f;margin:3px 0 0}
+.bill .title{display:flex;justify-content:space-between;align-items:flex-end;margin:16px 4px 10px}
+.bill .title .t{font-size:22px;letter-spacing:6px;color:#14284b}
+.bill .title .no{font-family:"Segoe UI",Arial,sans-serif;font-size:12px;color:#14284b}
+.bill .title .no b{font-size:15px}
+.bill .meta{display:grid;grid-template-columns:1fr 1fr;gap:6px 30px;margin:0 4px 14px;padding:10px 4px;border-top:1px solid #b8923f;border-bottom:1px solid #b8923f;font-family:"Segoe UI",Arial,sans-serif}
+.bill .meta span{color:#667085;font-size:10.5px;text-transform:uppercase;letter-spacing:1.5px;display:block}
+.bill .meta b{font-size:13.5px;color:#14284b}
+.bill table{border:0;border-radius:0;font-family:"Segoe UI",Arial,sans-serif;width:100%}
+.bill th{background:#14284b !important;color:#f3e6bf !important;border:0;font-size:10px;letter-spacing:1.5px;padding:8px 8px}
+.bill td{border:0;border-bottom:1px solid #d9dfeb;padding:8px;vertical-align:top;background:#fff !important}
+.bill tr:nth-child(even) td{background:#f6f8fc !important}
+.bill .sz{font-size:10.5px;color:#556}
+.bill .sum{margin:14px 0 0 auto;width:270px;font-family:"Segoe UI",Arial,sans-serif}
+.bill .sum div{display:flex;justify-content:space-between;padding:5px 10px;border-bottom:1px solid #d9dfeb}
+.bill .sum .g{background:#14284b !important;color:#f3e6bf;font-weight:700;font-size:14px;border:0}
+.bill .terms{margin-top:18px;padding:10px 12px;font-family:"Segoe UI",Arial,sans-serif;font-size:10.5px;color:#444;border-left:3px solid #b8923f;background:#f8f6ef !important}
+.bill .terms b{color:#14284b;letter-spacing:1.5px;font-size:10.5px}
+.bill .terms .ar{direction:rtl;text-align:right;margin-top:4px}
+.bill .bank{margin-top:12px;text-align:center;font-family:"Segoe UI",Arial,sans-serif;font-weight:600;color:#14284b;letter-spacing:1px;border:1px solid #b8923f;padding:6px}
+.bill .sig{display:flex;justify-content:space-between;margin:38px 8px 0;font-family:"Segoe UI",Arial,sans-serif;font-size:10.5px;letter-spacing:1px;color:#556}
+.bill .sig div{border-top:1px solid #14284b;padding-top:4px;width:190px;text-align:center}
+.bill .thanks{text-align:center;margin-top:16px;font-style:italic;color:#14284b;font-size:12px}
+.refrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0}
+.refbox{background:#f4f6fa;border:1px dashed #9fb3d6;border-radius:8px;padding:8px}
+.refbox input[type=file]{font-size:12px;padding:4px}
+.thumb{height:96px;max-width:100%;object-fit:cover;border-radius:6px;cursor:zoom-in;border:1px solid var(--line);background:#fff}
+.thumb.th-sm{height:54px}
+/* LOGIN */
+#login{position:fixed;inset:0;z-index:300;background:linear-gradient(180deg,#14284b,#0b1a35);display:flex;align-items:center;justify-content:center;padding:16px}
+#login .box{background:#fff;border-radius:14px;padding:28px 26px;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.4);text-align:center}
+#login .box b.t{display:block;font-family:Georgia,serif;font-size:24px;letter-spacing:2px;color:var(--plum)}
+#login .box .s{font-size:11px;color:var(--mut);letter-spacing:.5px;margin:2px 0 18px}
+#login .box input{text-align:center;font-size:18px;letter-spacing:4px;margin-bottom:12px}
+#login .box .err{color:var(--bad);font-size:12.5px;min-height:18px;margin-bottom:8px}
+#login .box button{width:100%}
+/* PRINT */
+#print{display:none}
+@media print{
+ body *{visibility:hidden}
+ #print,#print *{visibility:visible}
+ #print{display:block;position:absolute;left:0;top:0;width:100%}
+ @page{size:A4;margin:10mm}
+}
+</style>
+</head>
+<body>
+<div id="login"><div class="box"><b class="t">REGAL FASHION</b><div class="s">LADIES TAILORING &amp; EMBROIDERY · AL AIN</div>
+ <input type="password" id="lg_pw" placeholder="Password" inputmode="numeric" autocomplete="off">
+ <div class="err" id="lg_err"></div>
+ <button class="btn gold" onclick="doLogin()">Login</button></div></div>
+<div id="app">
+<aside>
+ <div class="brand"><b>REGAL FASHION</b><span>LADIES TAILORING &amp; EMBROIDERY · AL AIN</span></div>
+ <nav id="nav"></nav>
+ <div class="side-foot">Data is saved on this computer.<br>Use <b>Backup</b> regularly.<br><a href="#" style="color:#e6d4a6" onclick="doLogout();return false">Logout</a></div>
+</aside>
+<main id="main"></main>
+</div>
+<div id="print"></div>
+
+<script>
+/* ================= CONFIG ================= */
+const SHOP={
+ name:'REGAL FASHION', ar:'ريجل فاشن لخياطة وتطريز السيدات',
+ desc:'LADIES TAILORING & EMBROIDERY', loc:'Al Ain – Abu Dhabi, U.A.E.',
+ phones:['+971 54 533 979','+971 56 220 7882'],
+ bank:'ADIB Account No: 28702542', months:3
+};
+const STATUSES=['Confirmed','Embroidery','Stitching','Ready','Delivered','Cancelled'];
+const MEAS=['Length','Shoulder','Chest','Waist','Hip','Sleeve Length','Sleeve Width','Neck Front','Neck Back','Armhole','Bottom Width','Trouser Length'];
+const PARTY_TYPES=['Embroidery Designer','Jhig / Zig-Zag Designer','Crystal Supplier','Cloth Supplier','Tailor','Other'];
+const PURCH_CATS=['Design Sample','Crystals','Cloth','Tailor Labour','Embroidery Labour','Other'];
+const KEY='regal_fashion_db_v1';
+
+/* ================= LOGIN ================= */
+const LOGINS={owner:'111645',staff:'784198'};
+let ROLE=null;
+try{ROLE=sessionStorage.getItem('rf_role')}catch(e){}
+if(ROLE&&!LOGINS[ROLE])ROLE=null;
+function applyLogin(){const l=document.getElementById('login');if(l)l.style.display=ROLE?'none':'flex';if(!ROLE){const i=document.getElementById('lg_pw');if(i){i.value='';i.focus()}}}
+function doLogin(){
+ const p=document.getElementById('lg_pw').value.trim();
+ const r=Object.keys(LOGINS).find(k=>LOGINS[k]===p);
+ if(!r){document.getElementById('lg_err').textContent='Wrong password';document.getElementById('lg_pw').value='';document.getElementById('lg_pw').focus();return}
+ ROLE=r;try{sessionStorage.setItem('rf_role',r)}catch(e){}
+ document.getElementById('lg_err').textContent='';applyLogin();
+}
+function doLogout(){ROLE=null;try{sessionStorage.removeItem('rf_role')}catch(e){}applyLogin()}
+document.getElementById('lg_pw').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+applyLogin();
+
+/* ================= PHOTO STORE (IndexedDB – keeps big photos out of the main data) ================= */
+let PH={};
+const idb=new Promise(res=>{try{const r=indexedDB.open('regal_photos',1);r.onupgradeneeded=()=>r.result.createObjectStore('p');r.onsuccess=()=>res(r.result);r.onerror=()=>res(null)}catch(e){res(null)}});
+async function phLoadAll(){const db=await idb;if(!db)return;await new Promise(r=>{try{const rq=db.transaction('p').objectStore('p').openCursor();rq.onsuccess=e=>{const c=e.target.result;if(c){PH[c.key]=c.value;c.continue()}else r()};rq.onerror=()=>r()}catch(e){r()}})}
+async function phPut(k,v){PH[k]=v;const db=await idb;if(db)try{db.transaction('p','readwrite').objectStore('p').put(v,k)}catch(e){}}
+async function phDel(k){delete PH[k];const db=await idb;if(db)try{db.transaction('p','readwrite').objectStore('p').delete(k)}catch(e){}}
+async function phReplace(map){const db=await idb;PH=Object.assign({},map||{});if(db)try{const st=db.transaction('p','readwrite').objectStore('p');st.clear();Object.entries(PH).forEach(([k,v])=>st.put(v,k))}catch(e){}}
+const src=k=>!k?'':(String(k).startsWith('data:')?k:(PH[k]||''));
+function resizeImg(file,max,q,cb){const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,max/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',q))};im.src=r.result};r.readAsDataURL(file)}
+function zoomImg(k){const u=src(k);if(!u)return;const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:rgba(8,18,40,.88);z-index:120;display:flex;align-items:center;justify-content:center;cursor:zoom-out';d.innerHTML='<img src="'+u+'" style="max-width:92%;max-height:92%;border-radius:10px">';d.onclick=()=>d.remove();document.body.appendChild(d)}
+function migratePhotos(){let ch=false;DB.designs.forEach(d=>{if(d.photo&&String(d.photo).startsWith('data:')){const k='ph_'+uid();phPut(k,d.photo);d.photo=k;ch=true}});if(ch)save()}
+/* ---- recently deleted ---- */
+const TRASH_COL={order:'orders',design:'designs',party:'parties',purchase:'purchases',payment:'partyPay'};
+const TRASH_NAME={order:'Bill',design:'Design',party:'Supplier / Tailor',purchase:'Purchase',payment:'Payment to supplier'};
+function trashPush(kind,label,data){DB.trash.unshift({id:uid(),kind,label,data:JSON.parse(JSON.stringify(data)),date:new Date().toISOString()})}
+
+/* ================= STORE ================= */
+let DB=load();
+function blank(){return{designs:[],parties:[],orders:[],purchases:[],partyPay:[],trash:[],counter:1}}
+function normalize(x){x.trash=x.trash||[];x.partyPay=x.partyPay||[];x.orders.forEach(o=>{o.type='bill';if(o.status==='Quotation')o.status='Confirmed'});return x}
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.orders)return normalize(Object.assign(blank(),d))}catch(e){}return blank()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(Object.assign({},DB,{_photos:PH})))}catch(e){alert('Could not save data: '+e.message)}}
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num=v=>{const n=parseFloat(v);return isNaN(n)?0:n};
+const aed=n=>'AED '+num(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const fd=s=>{if(!s)return'';const[y,m,d]=s.split('-');return d+'/'+m+'/'+y};
+const addDays=(s,n)=>{const d=new Date(s+'T00:00:00');d.setDate(d.getDate()+n);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const addMonths=(s,n)=>{const d=new Date(s+'T00:00:00');d.setMonth(d.getMonth()+n);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const diffDays=(a,b)=>Math.round((new Date(a+'T00:00:00')-new Date(b+'T00:00:00'))/86400000);
+const billNo=n=>'RF-'+String(n).padStart(4,'0');
+const bn=o=>(o.ref&&o.ref.trim())||billNo(o.no);
+const orderTotal=o=>o.items.reduce((s,i)=>s+num(i.qty||1)*num(i.rate),0);
+const orderPaid=o=>(o.payments||[]).reduce((s,p)=>s+num(p.amt),0);
+const orderBal=o=>orderTotal(o)-orderPaid(o);
+const partyName=id=>(DB.parties.find(p=>p.id===id)||{}).name||'';
+const findDesign=no=>DB.designs.find(d=>d.model.toLowerCase()===String(no).trim().toLowerCase());
+function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2200)}
+
+/* ================= NAV ================= */
+const VIEWS=[['dash','🏠','Dashboard'],['orders','🧾','Orders & Bills'],['work','🧵','Work Tracker'],['designs','🌸','Design Catalogue'],['parties','🤝','Suppliers & Tailors'],['purch','🛒','Purchases'],['customers','👩','Customers'],['reports','📊','Reports'],['trash','🗑','Recently Deleted'],['backup','💾','Backup & Settings']];
+let view='dash',state={};
+function go(v,s){if(v!=='trash')trashUnlocked=false;view=v;state=s||{};render()}
+function render(){
+ document.getElementById('nav').innerHTML=VIEWS.map(([k,i,l])=>`<button class="${k===view?'on':''}" onclick="go('${k}')"><span>${i}</span>${l}</button>`).join('');
+ const m=document.getElementById('main');
+ ({dash:vDash,orders:vOrders,work:vWork,designs:vDesigns,parties:vParties,purch:vPurch,customers:vCustomers,reports:vReports,trash:vTrash,backup:vBackup})[view](m);
+}
+
+/* ================= MODAL ================= */
+function modal(html,narrow){closeModal();const d=document.createElement('div');d.className='modal-bg';d.id='modal';d.innerHTML=`<div class="modal ${narrow?'narrow':''}">${html}</div>`;document.body.appendChild(d);d.addEventListener('mousedown',e=>{if(e.target===d)closeModal()})}
+function closeModal(){const m=document.getElementById('modal');if(m)m.remove()}
+const $=id=>document.getElementById(id);
+const val=id=>($(id)||{}).value||'';
+
+/* ================= DASHBOARD ================= */
+function vDash(m){
+ const t=today();
+ const live=DB.orders.filter(o=>o.type==='bill'&&!['Delivered','Cancelled'].includes(o.status));
+ const dueToday=live.filter(o=>o.delivery===t);
+ const overdue=live.filter(o=>o.delivery&&o.delivery<t);
+ const soon=live.filter(o=>o.delivery>t&&diffDays(o.delivery,t)<=3);
+ const ready=DB.orders.filter(o=>o.status==='Ready');
+  const bal=DB.orders.filter(o=>o.type==='bill'&&o.status!=='Cancelled').reduce((s,o)=>s+Math.max(0,orderBal(o)),0);
+ const unclaimed=DB.orders.filter(o=>o.status==='Ready'&&o.delivery&&addMonths(o.delivery,SHOP.months)<t);
+ m.innerHTML=`<h1>Welcome to Regal Fashion</h1><div class="sub">${new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</div>
+ ${unclaimed.length?`<div class="alert">⚠ ${unclaimed.length} order(s) not collected for more than ${SHOP.months} months after delivery date – shop is no longer responsible. <a href="#" onclick="go('orders',{filter:'Ready'});return false">View</a></div>`:''}
+ <div class="grid stats">
+  <div class="card stat bad"><div class="n">${overdue.length}</div><div class="l">Overdue orders</div></div>
+  <div class="card stat warn"><div class="n">${dueToday.length}</div><div class="l">Due today</div></div>
+  <div class="card stat"><div class="n">${soon.length}</div><div class="l">Due in next 3 days</div></div>
+  <div class="card stat ok"><div class="n">${ready.length}</div><div class="l">Ready for pickup</div></div>
+  <div class="card stat"><div class="n">${live.length}</div><div class="l">Orders in progress</div></div>
+  <div class="card stat warn"><div class="n" style="font-size:22px">${aed(bal)}</div><div class="l">Balance to collect</div></div>
+ </div>
+ <div class="bar"><button class="btn gold" onclick="editOrder()">＋ New Bill</button><button class="btn ghost" onclick="editDesign()">＋ Add Design</button><button class="btn ghost" onclick="editParty()">＋ Add Supplier / Tailor</button></div>
+ <div class="two">
+  <div class="card"><h3 style="margin-top:0;color:var(--plum)">Deliveries needing attention</h3>
+   ${[...overdue,...dueToday,...soon].slice(0,8).map(o=>`<div class="list-row"><span><b>${bn(o)}</b> · ${esc(o.customer)}<br><span class="small muted">${esc(o.mobile)}</span></span><span style="text-align:right">${fd(o.delivery)}<br><span class="pill s-${o.status}">${o.status}</span></span></div>`).join('')||'<div class="muted">Nothing urgent 🎉</div>'}
+  </div>
+  <div class="card"><h3 style="margin-top:0;color:var(--plum)">Latest orders</h3>
+   ${DB.orders.slice().sort((a,b)=>b.no-a.no).slice(0,8).map(o=>`<div class="list-row" style="cursor:pointer" onclick="viewOrder('${o.id}')"><span><b>${bn(o)}</b> · ${esc(o.customer)}</span><span>${aed(orderTotal(o))} <span class="pill s-${o.status}">${o.status}</span></span></div>`).join('')||'<div class="muted">No orders yet.</div>'}
+  </div>
+ </div>`;
+}
+
+/* ================= DESIGNS ================= */
+function vDesigns(m){
+ const q=(state.q||'').toLowerCase(),tp=state.type||'';
+ let list=DB.designs.filter(d=>(!tp||d.type===tp)&&(!q||(d.model+' '+d.region+' '+d.notes+' '+partyName(d.partyId)).toLowerCase().includes(q)));
+ m.innerHTML=`<h1>Design Catalogue</h1><div class="sub">Sample designs purchased from computer-embroidery and Jhig (zig-zag) designers.</div>
+ <div class="bar"><input placeholder="Search model no, region, notes…" value="${esc(state.q||'')}" oninput="state.q=this.value;vDesigns($('main'));$('main').querySelector('input').focus();const i=$('main').querySelector('input');i.setSelectionRange(i.value.length,i.value.length)">
+ <select onchange="state.type=this.value;vDesigns($('main'))"><option value="">All types</option><option ${tp==='Computer Embroidery'?'selected':''}>Computer Embroidery</option><option ${tp==='Jhig / Zig-Zag'?'selected':''}>Jhig / Zig-Zag</option></select>
+ <span class="sp"></span><button class="btn gold" onclick="editDesign()">＋ Add Design</button></div>
+ ${list.length?`<div class="grid cards">${list.map(d=>`<div class="card dcard" onclick="editDesign('${d.id}')"><div class="ph" style="${src(d.photo)?`background-image:url(${src(d.photo)})`:''}">${src(d.photo)?'':'No photo'}</div><div class="bd"><div class="m">${esc(d.model)}</div><div class="small muted">${esc(d.type)}${d.region?' · '+esc(d.region):''}</div><div class="small">Designer: ${esc(partyName(d.partyId)||'—')}</div><div class="small">Sample cost: <b>${aed(d.samplePrice)}</b></div><div class="small">Sell from: <b>${aed(d.sellRate)}</b></div>${d.stitched?'<span class="pill s-Ready">Display piece ready</span>':'<span class="pill">Sample only</span>'}</div></div>`).join('')}</div>`:`<div class="empty">No designs yet. Click <b>Add Design</b> to enter your first model number.</div>`}`;
+}
+function editDesign(id){
+ const d=DB.designs.find(x=>x.id===id)||{id:'',model:'',type:'Computer Embroidery',partyId:'',region:'',samplePrice:'',crystalSize:'',crystalQty:'',crystalCost:'',sellRate:'',stitched:false,tailorId:'',notes:'',photo:'',date:today()};
+ window._photo=d.photo;
+ const des=DB.parties.filter(p=>/Designer/.test(p.type)),tl=DB.parties.filter(p=>p.type==='Tailor');
+ modal(`<h2>${id?'Edit':'Add'} Design</h2>
+ <div class="f"><div><label>Model Number *</label><input id="d_model" value="${esc(d.model)}"></div>
+ <div><label>Type</label><select id="d_type"><option ${d.type==='Computer Embroidery'?'selected':''}>Computer Embroidery</option><option ${d.type==='Jhig / Zig-Zag'?'selected':''}>Jhig / Zig-Zag</option></select></div>
+ <div><label>Designer / Supplier</label><select id="d_party"><option value="">—</option>${des.map(p=>`<option value="${p.id}" ${p.id===d.partyId?'selected':''}>${esc(p.name)}</option>`).join('')}</select></div>
+ <div><label>Region / City bought from</label><input id="d_region" value="${esc(d.region)}" placeholder="e.g. Dubai, Sharjah, India"></div>
+ <div><label>Purchase date</label><input type="date" id="d_date" value="${d.date||''}"></div>
+ <div><label>Sample price (AED)</label><input type="number" step="0.01" id="d_price" value="${d.samplePrice}"></div>
+ <div><label>Crystal size(s) used</label><input id="d_csize" value="${esc(d.crystalSize)}" placeholder="e.g. SS10, SS16, 4mm"></div>
+ <div><label>Crystal qty / packs</label><input id="d_cqty" value="${esc(d.crystalQty)}"></div>
+ <div><label>Crystal cost (AED)</label><input type="number" step="0.01" id="d_ccost" value="${d.crystalCost}"></div>
+ <div><label>Selling rate from (AED)</label><input type="number" step="0.01" id="d_sell" value="${d.sellRate}"></div>
+ <div><label>Display piece stitched?</label><select id="d_st"><option value="0">No</option><option value="1" ${d.stitched?'selected':''}>Yes</option></select></div>
+ <div><label>Stitched by (tailor)</label><select id="d_tailor"><option value="">—</option>${tl.map(p=>`<option value="${p.id}" ${p.id===d.tailorId?'selected':''}>${esc(p.name)}</option>`).join('')}</select></div>
+ <div class="full"><label>Notes</label><textarea id="d_notes" rows="2">${esc(d.notes)}</textarea></div>
+ <div class="full"><label>Photo</label><input type="file" accept="image/*" onchange="pickPhoto(this)"><div id="d_prev" style="margin-top:6px">${src(d.photo)?`<img src="${src(d.photo)}" style="max-height:120px;border-radius:8px">`:''}</div></div></div>
+ <div class="actions">${id?`<button class="btn danger" onclick="delDesign('${id}')">Delete</button>`:''}<span style="flex:1"></span><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveDesign('${id}')">Save Design</button></div>`);
+}
+function pickPhoto(inp){const f=inp.files[0];if(!f)return;resizeImg(f,560,.8,u=>{window._photo=u;$('d_prev').innerHTML=`<img src="${u}" style="max-height:120px;border-radius:8px">`})}
+function saveDesign(id){
+ const model=val('d_model').trim();if(!model)return alert('Please enter the model number.');
+ const dup=DB.designs.find(x=>x.model.toLowerCase()===model.toLowerCase()&&x.id!==id);if(dup)return alert('This model number already exists in the catalogue.');
+ const o={id:id||uid(),model,type:val('d_type'),partyId:val('d_party'),region:val('d_region'),date:val('d_date'),samplePrice:val('d_price'),crystalSize:val('d_csize'),crystalQty:val('d_cqty'),crystalCost:val('d_ccost'),sellRate:val('d_sell'),stitched:val('d_st')==='1',tailorId:val('d_tailor'),notes:val('d_notes'),photo:''};
+ let ph=window._photo||'';if(ph.startsWith('data:')){const k='ph_'+uid();phPut(k,ph);ph=k}o.photo=ph;
+ if(id)DB.designs[DB.designs.findIndex(x=>x.id===id)]=o;else DB.designs.push(o);
+ save();closeModal();toast('Design saved');render();
+}
+function delDesign(id){const x=DB.designs.find(d=>d.id===id);if(x&&confirm('Delete this design? You can restore it from Recently Deleted.')){trashPush('design',x.model+' ('+x.type+')',x);DB.designs=DB.designs.filter(x=>x.id!==id);save();closeModal();render()}}
+
+/* ================= PARTIES ================= */
+function vParties(m){
+ const tp=state.type||'';const list=DB.parties.filter(p=>!tp||p.type===tp);
+ m.innerHTML=`<h1>Suppliers, Designers &amp; Tailors</h1><div class="sub">Embroidery/Jhig designers, crystal & cloth suppliers and your tailors.</div>
+ <div class="bar"><select onchange="state.type=this.value;vParties($('main'))"><option value="">All</option>${PARTY_TYPES.map(t=>`<option ${t===tp?'selected':''}>${t}</option>`).join('')}</select><span class="sp"></span><button class="btn gold" onclick="editParty()">＋ Add</button></div>
+ ${list.length?`<table><tr><th>Name</th><th>Type</th><th>Phone</th><th>Area</th><th class="r">Purchased / Paid</th><th></th></tr>${list.map(p=>{const tot=DB.purchases.filter(x=>x.partyId===p.id).reduce((s,x)=>s+num(x.qty||1)*num(x.price),0);const dn=DB.purchases.filter(x=>x.partyId===p.id).reduce((s,x)=>s+num(x.paid),0);return`<tr class="click" onclick="editParty('${p.id}')"><td><b>${esc(p.name)}</b></td><td>${esc(p.type)}</td><td>${esc(p.phone)}</td><td>${esc(p.area)}</td><td class="r">${aed(tot)}${tot-dn>0.005?`<br><span class="small" style="color:var(--bad)">Due ${aed(tot-dn)}</span>`:''}</td><td class="r">${/Designer|Tailor/.test(p.type)?`<button class="btn ghost sm" onclick="event.stopPropagation();go('work',{pid:'${p.id}'})">View work</button>`:''}</td></tr>`}).join('')}</table>`:'<div class="empty">No suppliers added yet.</div>'}`;
+}
+function editParty(id){
+ const p=DB.parties.find(x=>x.id===id)||{name:'',type:'Embroidery Designer',phone:'',area:'',notes:''};
+ modal(`<h2>${id?'Edit':'Add'} Supplier / Tailor</h2><div class="f">
+ <div><label>Name *</label><input id="p_name" value="${esc(p.name)}"></div>
+ <div><label>Type</label><select id="p_type">${PARTY_TYPES.map(t=>`<option ${t===p.type?'selected':''}>${t}</option>`).join('')}</select></div>
+ <div><label>Phone</label><input id="p_phone" value="${esc(p.phone)}"></div>
+ <div><label>City / Area</label><input id="p_area" value="${esc(p.area)}"></div>
+ <div class="full"><label>Notes</label><textarea id="p_notes" rows="2">${esc(p.notes)}</textarea></div></div>
+ <div class="actions">${id?`<button class="btn danger" onclick="delParty('${id}')">Delete</button>`:''}<span style="flex:1"></span><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveParty('${id||''}')">Save</button></div>`,true);
+}
+function saveParty(id){
+ const name=val('p_name').trim();if(!name)return alert('Enter a name.');
+ const o={id:id||uid(),name,type:val('p_type'),phone:val('p_phone'),area:val('p_area'),notes:val('p_notes')};
+ if(id)DB.parties[DB.parties.findIndex(x=>x.id===id)]=o;else DB.parties.push(o);
+ save();closeModal();toast('Saved');render();
+}
+function delParty(id){const x=DB.parties.find(d=>d.id===id);if(x&&confirm('Delete this entry? You can restore it from Recently Deleted.')){trashPush('party',x.name+' ('+x.type+')',x);DB.parties=DB.parties.filter(x=>x.id!==id);save();closeModal();render()}}
+
+
+/* ================= WORK TRACKER ================= */
+const WORKERS=['Embroidery Designer','Jhig / Zig-Zag Designer','Tailor'];
+function workRows(pid){
+ const r=[];
+ DB.orders.forEach(o=>{ if(o.status==='Cancelled')return;
+  o.items.forEach((it,idx)=>{
+   const q=num(it.qty||1);
+   if(it.emb===pid)r.push({o,it,idx,role:'emb',q,done:!!it.embDone,cost:q*num(it.embCost)});
+   if(it.tailor===pid)r.push({o,it,idx,role:'tailor',q,done:!!it.tailorDone,cost:q*num(it.tailorCost)});
+  })});
+ return r;
+}
+const pcs=a=>a.reduce((s,x)=>s+x.q,0);
+function vWork(m){
+ if(state.pid)return vWorkDetail(m);
+ const tp=state.type||'';
+ m.innerHTML=`<h1>Work Tracker</h1><div class="sub">See how many pieces are pending with each embroidery designer, Jhig (zig-zag) designer and tailor. Click a name to see their full details and account.</div>
+ <div class="bar"><input id="wq" placeholder="Search by name…" value="${esc(state.q||'')}"><select onchange="state.type=this.value;vWork($('main'))"><option value="">All</option>${WORKERS.map(t=>`<option ${t===tp?'selected':''}>${t}</option>`).join('')}</select></div><div id="wlist"></div>`;
+ const draw=()=>{state.q=$('wq').value;const q=state.q.toLowerCase();
+  const ps=DB.parties.filter(p=>WORKERS.includes(p.type)&&(!tp||p.type===tp)&&(!q||p.name.toLowerCase().includes(q)));
+  const t=today();
+  $('wlist').innerHTML=ps.length?`<table><tr><th>Name</th><th>Type</th><th class="r">Pending pcs</th><th class="r">Completed pcs</th><th>Oldest pending delivery</th></tr>${ps.map(p=>{const r=workRows(p.id),pe=r.filter(x=>!x.done),dn=r.filter(x=>x.done);const old=pe.map(x=>x.o.delivery).filter(Boolean).sort()[0];
+   return`<tr class="click" onclick="go('work',{pid:'${p.id}'})"><td><b>${esc(p.name)}</b><br><span class="small muted">${esc(p.phone)}</span></td><td>${esc(p.type)}</td><td class="r"><span class="pill ${pe.length?'s-Stitching':''}" style="font-size:14px">${pcs(pe)}</span></td><td class="r">${pcs(dn)}</td><td ${old&&old<t?'style="color:var(--bad);font-weight:700"':''}>${old?fd(old)+(old<t?' ⚠ late':''):'—'}</td></tr>`}).join('')}</table>`:'<div class="empty">No designers or tailors found. Add them in <b>Suppliers &amp; Tailors</b> and assign them on orders.</div>'};
+ $('wq').addEventListener('input',draw);draw();
+}
+function vWorkDetail(m){
+ const p=DB.parties.find(x=>x.id===state.pid);if(!p){state.pid='';return vWork(m)}
+ const r=workRows(p.id),pe=r.filter(x=>!x.done),dn=r.filter(x=>x.done);
+ const doneVal=dn.reduce((s,x)=>s+x.cost,0),pendVal=pe.reduce((s,x)=>s+x.cost,0);
+ const pur=DB.purchases.filter(x=>x.partyId===p.id),purTot=pur.reduce((s,x)=>s+num(x.qty||1)*num(x.price),0),purPaid=pur.reduce((s,x)=>s+num(x.paid),0);
+ const pays=DB.partyPay.filter(x=>x.partyId===p.id).sort((a,b)=>b.date.localeCompare(a.date)),paid=pays.reduce((s,x)=>s+num(x.amt),0);
+ const balance=doneVal+purTot-purPaid-paid;const t=today();
+ const roleN=x=>x.role==='emb'?(p.type.startsWith('Jhig')?'Jhig work':'Computer embroidery'):'Stitching';
+ const row=x=>`<tr><td><b>${bn(x.o)}</b></td><td>${esc(x.o.customer)}</td><td><b>${esc(x.it.design)}</b><br><span class="small muted">${esc(x.it.cloth)}</span></td><td>${roleN(x)}</td><td class="r">${x.q}</td><td class="r">${aed(x.cost)}</td><td ${!x.done&&x.o.delivery<t?'style="color:var(--bad);font-weight:700"':''}>${fd(x.o.delivery)}</td><td class="r"><button class="btn ${x.done?'ghost':'gold'} sm" onclick="toggleWork('${x.o.id}',${x.idx},'${x.role}')">${x.done?'Undo':'✔ Mark done'}</button></td></tr>`;
+ const head='<tr><th>Bill</th><th>Customer</th><th>Model</th><th>Work</th><th class="r">Pcs</th><th class="r">Charge</th><th>Delivery</th><th></th></tr>';
+ m.innerHTML=`<div class="bar"><button class="btn ghost sm" onclick="go('work')">← All workers</button></div>
+ <h1>${esc(p.name)}</h1><div class="sub">${esc(p.type)}${p.phone?' · 📞 '+esc(p.phone):''}${p.area?' · '+esc(p.area):''} <span class="small">· 🔒 Private account – not shown on any bill</span></div>
+ <div class="grid stats">
+ <div class="card stat warn"><div class="n">${pcs(pe)}</div><div class="l">Pieces pending</div></div>
+ <div class="card stat ok"><div class="n">${pcs(dn)}</div><div class="l">Pieces completed</div></div>
+ <div class="card stat"><div class="n" style="font-size:22px">${aed(pendVal)}</div><div class="l">Value of pending work</div></div>
+ <div class="card stat"><div class="n" style="font-size:22px">${aed(doneVal)}</div><div class="l">Completed work charges</div></div>
+ <div class="card stat"><div class="n" style="font-size:22px">${aed(purTot-purPaid)}</div><div class="l">Samples/purchases unpaid</div></div>
+ <div class="card stat"><div class="n" style="font-size:22px">${aed(paid)}</div><div class="l">Payments made to them</div></div>
+ <div class="card stat ${balance>0.005?'bad':'ok'}"><div class="n" style="font-size:22px">${aed(balance)}</div><div class="l">${balance<-0.005?'Advance with them':'Balance we owe'}</div></div></div>
+ <div class="small muted" style="margin-bottom:14px">Balance we owe = completed work charges + unpaid purchases − payments made.</div>
+ <h3 style="color:var(--plum)">Pending pieces</h3>${pe.length?`<table>${head}${pe.sort((a,b)=>a.o.delivery.localeCompare(b.o.delivery)).map(row).join('')}</table>`:'<div class="empty">Nothing pending 🎉</div>'}
+ <h3 style="color:var(--plum);margin-top:22px">Completed pieces</h3>${dn.length?`<table>${head}${dn.map(row).join('')}</table>`:'<div class="empty">None yet.</div>'}
+ <h3 style="color:var(--plum);margin-top:22px">Payments to ${esc(p.name)}</h3>
+ <div class="card"><div class="f" style="margin-bottom:8px"><div><label>Date</label><input type="date" id="wp_date" value="${today()}"></div><div><label>Amount (AED)</label><input type="number" step="0.01" id="wp_amt"></div><div><label>Note</label><input id="wp_note" placeholder="Cash / transfer / for bill…"></div></div><button class="btn" onclick="addPartyPay('${p.id}')">Record payment</button>
+ ${pays.map(x=>`<div class="list-row"><span>${fd(x.date)} · ${esc(x.note||'')}</span><span>${aed(x.amt)} <a href="#" style="color:var(--bad);margin-left:8px" onclick="delPartyPay('${x.id}');return false">remove</a></span></div>`).join('')}</div>`;
+}
+function toggleWork(oid,idx,role){
+ const o=DB.orders.find(x=>x.id===oid),it=o.items[idx],k=role==='emb'?'embDone':'tailorDone';
+ it[k]=!it[k];
+ if(role==='tailor'&&it[k]&&o.items.every(i=>!i.tailor||i.tailorDone)&&['Confirmed','Embroidery','Stitching'].includes(o.status)){o.status='Ready';toast(bn(o)+' is now READY for pickup')}
+ save();render();
+}
+function addPartyPay(pid){const a=num(val('wp_amt'));if(a<=0)return alert('Enter the amount.');DB.partyPay.push({id:uid(),partyId:pid,date:val('wp_date')||today(),amt:a,note:val('wp_note')});save();toast('Payment recorded');render()}
+function delPartyPay(id){const x=DB.partyPay.find(d=>d.id===id);if(x&&confirm('Remove this payment? You can restore it from Recently Deleted.')){trashPush('payment',partyName(x.partyId)+' · '+aed(x.amt)+' on '+fd(x.date),x);DB.partyPay=DB.partyPay.filter(x=>x.id!==id);save();render()}}
+
+/* ================= PURCHASES ================= */
+function vPurch(m){
+ const cat=state.cat||'';const list=DB.purchases.filter(p=>!cat||p.cat===cat).sort((a,b)=>b.date.localeCompare(a.date));
+ const tot=list.reduce((s,p)=>s+num(p.qty||1)*num(p.price),0),paid=list.reduce((s,p)=>s+num(p.paid),0);
+ m.innerHTML=`<h1>Purchases &amp; Costs</h1><div class="sub">Design samples, crystals, cloth and labour – what you bought, from whom and at what price.</div>
+ <div class="bar"><select onchange="state.cat=this.value;vPurch($('main'))"><option value="">All categories</option>${PURCH_CATS.map(c=>`<option ${c===cat?'selected':''}>${c}</option>`).join('')}</select><span class="sp"></span><b>Total ${aed(tot)}</b> <span class="muted">· Paid ${aed(paid)} · Due ${aed(tot-paid)}</span><button class="btn gold" onclick="editPurch()">＋ Add Purchase</button></div>
+ ${list.length?`<table><tr><th>Date</th><th>Category</th><th>Supplier</th><th>Details</th><th>Model</th><th class="r">Qty</th><th class="r">Price</th><th class="r">Total</th><th class="r">Paid</th></tr>${list.map(p=>`<tr class="click" onclick="editPurch('${p.id}')"><td>${fd(p.date)}</td><td>${esc(p.cat)}</td><td>${esc(partyName(p.partyId))}</td><td>${esc(p.desc)}${p.size?` <span class="muted small">(${esc(p.size)})</span>`:''}</td><td>${esc(p.model)}</td><td class="r">${esc(p.qty)}</td><td class="r">${aed(p.price)}</td><td class="r"><b>${aed(num(p.qty||1)*num(p.price))}</b></td><td class="r">${aed(p.paid)}</td></tr>`).join('')}</table>`:'<div class="empty">No purchases recorded yet.</div>'}`;
+}
+function editPurch(id){
+ const p=DB.purchases.find(x=>x.id===id)||{date:today(),cat:'Design Sample',partyId:'',desc:'',size:'',model:'',qty:1,price:'',paid:''};
+ modal(`<h2>${id?'Edit':'Add'} Purchase</h2><div class="f">
+ <div><label>Date</label><input type="date" id="u_date" value="${p.date}"></div>
+ <div><label>Category</label><select id="u_cat">${PURCH_CATS.map(c=>`<option ${c===p.cat?'selected':''}>${c}</option>`).join('')}</select></div>
+ <div><label>Supplier</label><select id="u_party"><option value="">—</option>${DB.parties.map(x=>`<option value="${x.id}" ${x.id===p.partyId?'selected':''}>${esc(x.name)} (${esc(x.type)})</option>`).join('')}</select></div>
+ <div><label>Model No (if for a design)</label><input id="u_model" list="dl_models" value="${esc(p.model)}"></div>
+ <div class="full"><label>Description</label><input id="u_desc" value="${esc(p.desc)}" placeholder="e.g. Crystal packs, 3m cloth, stitching charge"></div>
+ <div><label>Crystal size / unit</label><input id="u_size" value="${esc(p.size)}"></div>
+ <div><label>Quantity</label><input type="number" step="any" id="u_qty" value="${p.qty}"></div>
+ <div><label>Unit price (AED)</label><input type="number" step="0.01" id="u_price" value="${p.price}"></div>
+ <div><label>Amount paid (AED)</label><input type="number" step="0.01" id="u_paid" value="${p.paid}"></div></div>
+ <datalist id="dl_models">${DB.designs.map(d=>`<option value="${esc(d.model)}">`).join('')}</datalist>
+ <div class="actions">${id?`<button class="btn danger" onclick="delPurch('${id}')">Delete</button>`:''}<span style="flex:1"></span><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="savePurch('${id||''}')">Save</button></div>`,true);
+}
+function savePurch(id){
+ const o={id:id||uid(),date:val('u_date')||today(),cat:val('u_cat'),partyId:val('u_party'),model:val('u_model'),desc:val('u_desc'),size:val('u_size'),qty:val('u_qty'),price:val('u_price'),paid:val('u_paid')};
+ if(id)DB.purchases[DB.purchases.findIndex(x=>x.id===id)]=o;else DB.purchases.push(o);
+ save();closeModal();toast('Saved');render();
+}
+function delPurch(id){const x=DB.purchases.find(d=>d.id===id);if(x&&confirm('Delete this purchase? You can restore it from Recently Deleted.')){trashPush('purchase',(x.desc||x.cat)+' · '+aed(num(x.qty||1)*num(x.price)),x);DB.purchases=DB.purchases.filter(x=>x.id!==id);save();closeModal();render()}}
+
+/* ================= ORDERS ================= */
+function vOrders(m){
+ const f=state.filter||'',q=(state.q||'').toLowerCase();
+ let list=DB.orders.filter(o=>(!f||(f==='Open'?!['Delivered','Cancelled'].includes(o.status):o.status===f))&&(!q||(o.customer+o.mobile+bn(o)+o.items.map(i=>i.design).join(' ')).toLowerCase().includes(q))).sort((a,b)=>b.no-a.no);
+ m.innerHTML=`<h1>Orders &amp; Bills</h1><div class="sub">Every customer order with model numbers, sizes, rates, advance and delivery date.</div>
+ <div class="bar"><input id="oq" placeholder="Search customer, mobile, bill no, model…" value="${esc(state.q||'')}"><select onchange="state.filter=this.value;vOrders($('main'))"><option value="">All</option><option ${f==='Open'?'selected':''}>Open</option>${STATUSES.map(s=>`<option ${s===f?'selected':''}>${s}</option>`).join('')}</select><span class="sp"></span><button class="btn gold" onclick="editOrder()">＋ New Bill</button></div>
+ <div id="olist"></div>`;
+ const draw=()=>{const qq=$('oq').value.toLowerCase();state.q=$('oq').value;const l=list.filter(o=>!qq||(o.customer+o.mobile+bn(o)+o.items.map(i=>i.design).join(' ')).toLowerCase().includes(qq));
+  $('olist').innerHTML=l.length?`<table><tr><th>No</th><th>Date</th><th>Customer</th><th>Models</th><th>Delivery</th><th class="r">Total</th><th class="r">Balance</th><th>Status</th></tr>${l.map(o=>{const late=o.delivery&&o.delivery<today()&&!['Delivered','Cancelled','Quotation'].includes(o.status);return`<tr class="click" onclick="viewOrder('${o.id}')"><td><b>${bn(o)}</b><br><span class="small muted">Bill</span></td><td>${fd(o.date)}</td><td>${esc(o.customer)}<br><span class="small muted">${esc(o.mobile)}</span></td><td>${esc(o.items.map(i=>i.design).filter(Boolean).join(', '))}<br><span class="small muted">${o.items.length} cloth(s)</span></td><td ${late?'style="color:var(--bad);font-weight:700"':''}>${fd(o.delivery)}${late?' ⚠':''}</td><td class="r">${aed(orderTotal(o))}</td><td class="r">${aed(orderBal(o))}</td><td><span class="pill s-${o.status}">${o.status}</span></td></tr>`}).join('')}</table>`:'<div class="empty">No orders found.</div>'};
+ $('oq').addEventListener('input',draw);draw();
+}
+function newItem(){return{design:'',cloth:'',clothFrom:'Customer',qty:1,rate:'',tailor:'',notes:'',size:{},sizeNote:'',emb:'',embCost:'',tailorCost:'',embDone:false,tailorDone:false}}
+function editOrder(id,fromQuote){
+ let o=DB.orders.find(x=>x.id===id);
+ if(!o)o={id:'',no:DB.counter,type:'bill',date:today(),delivery:addDays(today(),7),customer:'',mobile:'',items:[newItem()],payments:[],status:'Confirmed',notes:''};
+ window._o=JSON.parse(JSON.stringify(o));
+ drawOrderForm();
+}
+function drawOrderForm(){
+ const o=window._o;
+ const _old=document.getElementById('modal'),_sc=_old?_old.scrollTop:0;
+ modal(`<h2>${o.id?'Edit':'New'} Bill · ${bn(o)}</h2>
+ <div class="f">
+ <div><label>Bill No. (you can type your own)</label><input id="o_ref" value="${esc(o.ref||billNo(o.no))}"></div>
+ <div><label>Customer name *</label><input id="o_cust" list="dl_cust" value="${esc(o.customer)}" onchange="pickCustomer(this.value)"></div>
+ <div><label>Mobile number *</label><input id="o_mob" value="${esc(o.mobile)}" placeholder="05xxxxxxxx"></div>
+ <div><label>Date</label><input type="date" id="o_date" value="${o.date}"></div>
+ <div><label>Delivery date *</label><input type="date" id="o_del" value="${o.delivery}"></div>
+ <div><label>Status</label><select id="o_status">${STATUSES.map(s=>`<option ${s===o.status?'selected':''}>${s}</option>`).join('')}</select></div></div>
+ <datalist id="dl_cust">${[...new Set(DB.orders.map(x=>x.customer))].map(c=>`<option value="${esc(c)}">`).join('')}</datalist>
+ <datalist id="dl_models">${DB.designs.map(d=>`<option value="${esc(d.model)}">`).join('')}</datalist>
+ <h3 style="color:var(--plum);margin:6px 0">Cloths &amp; Selected Designs</h3>
+ <div id="o_items">${o.items.map((it,i)=>itemHTML(it,i)).join('')}</div>
+ <button class="btn ghost sm" onclick="syncOrder();_o.items.push(newItem());drawOrderForm()">＋ Add another cloth</button>
+ <div class="f" style="margin-top:14px">
+ <div><label>Advance received now (AED)</label><input type="number" step="0.01" id="o_adv" value="" placeholder="${o.payments.length?'Add further payment':'0.00'}"></div>
+ <div><label>Payment method</label><select id="o_pm"><option>Cash</option><option>Card</option><option>Bank Transfer (ADIB)</option></select></div>
+ <div class="full"><label>Notes</label><textarea id="o_notes" rows="2">${esc(o.notes)}</textarea></div></div>
+ ${o.payments.length?`<div class="small muted">Payments so far: ${o.payments.map((p,i)=>`${fd(p.date)} ${aed(p.amt)} (${esc(p.method||'')}) <a href="#" onclick="syncOrder();_o.payments.splice(${i},1);drawOrderForm();return false" style="color:var(--bad)">remove</a>`).join(' · ')}</div>`:''}
+ <div class="tot"><span>Total <b id="o_total">${aed(orderTotal(o))}</b></span><span>Paid <b id="o_paid">${aed(orderPaid(o))}</b></span><span>Balance <b id="o_bal">${aed(orderBal(o))}</b></span></div>
+ <div class="actions"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveOrder()">Save</button><button class="btn gold" onclick="saveOrder(true)">Save &amp; Print</button></div>`);
+ const _n=document.getElementById('modal');if(_n)_n.scrollTop=_sc;
+}
+function pickCustomer(n){const prev=[...DB.orders].reverse().find(x=>x.customer.toLowerCase()===n.trim().toLowerCase());if(prev&&!val('o_mob'))$('o_mob').value=prev.mobile}
+function itemHTML(it,i){
+ const tl=DB.parties.filter(p=>p.type==='Tailor');const d=findDesign(it.design);
+ return`<div class="item"><div class="hd"><span>Cloth ${i+1}</span>${window._o.items.length>1?`<button class="btn danger sm" onclick="syncOrder();_o.items.splice(${i},1);drawOrderForm()">Remove</button>`:''}</div>
+ <div class="f">
+ <div><label>Design Model No *</label><input class="i_design" list="dl_models" value="${esc(it.design)}" oninput="autoRate(this,${i});setDesignRef(this,${i})"></div>
+ <div><label>Cloth / Fabric description</label><input class="i_cloth" value="${esc(it.cloth)}" placeholder="e.g. Black crepe, 3 m"></div>
+ <div><label>Cloth supplied by</label><select class="i_from"><option ${it.clothFrom==='Customer'?'selected':''}>Customer</option><option ${it.clothFrom==='Shop'?'selected':''}>Shop</option></select></div>
+ <div><label>Qty</label><input type="number" min="1" class="i_qty" value="${it.qty}" oninput="calc()"></div>
+ <div><label>Rate (AED)</label><input type="number" step="0.01" class="i_rate" value="${it.rate}" oninput="calc()"></div>
+ <div><label>Assigned tailor</label><select class="i_tailor"><option value="">—</option>${tl.map(p=>`<option value="${p.id}" ${p.id===it.tailor?'selected':''}>${esc(p.name)}</option>`).join('')}</select></div></div>
+ <div class="refrow"><div class="refbox"><div class="small" style="font-weight:700;color:var(--plum);margin-bottom:5px">🌸 Selected design – for your reference, not printed</div><div id="dref_${i}">${designRefHTML(it.design)}</div></div>
+ <div class="refbox"><div class="small" style="font-weight:700;color:var(--plum);margin-bottom:5px">🧵 Customer's cloth photo – for your reference, not printed</div>${src(it.clothPhoto)?`<img class="thumb" src="${src(it.clothPhoto)}" onclick="zoomImg('${it.clothPhoto}')"> <button class="btn danger sm" onclick="syncOrder();_o.items[${i}].clothPhoto='';drawOrderForm()">Remove photo</button>`:'<div class="small muted" style="margin-bottom:6px">No photo added yet</div>'}<input type="file" accept="image/*" style="margin-top:6px" onchange="pickClothPhoto(this,${i})"></div></div>
+ <div class="internal"><div class="small" style="font-weight:700;color:var(--plum);margin-bottom:6px">🔒 Internal work &amp; cost – never printed on the bill</div><div class="f" style="margin-bottom:0">
+ <div><label>Embroidery / Jhig by</label><select class="i_emb"><option value="">—</option>${DB.parties.filter(p=>/Designer/.test(p.type)).map(p=>`<option value="${p.id}" ${p.id===it.emb?'selected':''}>${esc(p.name)} (${p.type.startsWith('Jhig')?'Jhig':'Computer'})</option>`).join('')}</select></div>
+ <div><label>Their charge per pc (AED)</label><input type="number" step="0.01" class="i_ecost" value="${it.embCost||''}"></div>
+ <div><label>Tailor charge per pc (AED)</label><input type="number" step="0.01" class="i_tcost" value="${it.tailorCost||''}"></div></div></div>
+ <label class="small muted" style="font-weight:600">Measurements (inches / cm – as you use)</label>
+ <div class="meas">${MEAS.map(k=>`<div><label>${k}</label><input class="i_m" data-k="${k}" value="${esc((it.size||{})[k]||'')}"></div>`).join('')}</div>
+ <div class="f" style="margin-top:8px"><div class="full"><label>Size / style remarks</label><input class="i_sn" value="${esc(it.sizeNote||'')}" placeholder="e.g. Size M, loose fit, round neck, 3/4 sleeves"></div></div></div>`;
+}
+function designRefHTML(model){const d=findDesign(model);if(!String(model||'').trim())return'<span class="small muted">Type or pick a model number to see its picture</span>';if(!d)return'<span class="small muted">Model not found in Design Catalogue</span>';
+ return`${src(d.photo)?`<img class="thumb" src="${src(d.photo)}" onclick="zoomImg('${d.photo}')">`:'<div class="small muted">No photo saved for this design</div>'}<div class="small" style="margin-top:4px"><b>${esc(d.model)}</b> · ${esc(d.type)}${d.notes?'<br>'+esc(d.notes):''}</div>`}
+function setDesignRef(inp,i){const e=$('dref_'+i);if(e)e.innerHTML=designRefHTML(inp.value)}
+function pickClothPhoto(inp,i){const f=inp.files[0];if(!f)return;syncOrder();resizeImg(f,800,.75,u=>{const k='ph_'+uid();phPut(k,u);_o.items[i].clothPhoto=k;drawOrderForm()})}
+function thumbs(i){const d=findDesign(i.design);const t=(k,l)=>src(k)?`<div style="text-align:center"><img class="thumb th-sm" src="${src(k)}" onclick="zoomImg('${k}')"><div class="small muted" style="font-size:10px">${l}</div></div>`:'';return`<div style="display:flex;gap:6px">${d?t(d.photo,'Design'):''}${t(i.clothPhoto,'Cloth')}</div>`}
+function autoRate(inp,i){const d=findDesign(inp.value);const r=document.querySelectorAll('.i_rate')[i];if(d&&d.sellRate&&!r.value){r.value=d.sellRate;calc()}}
+function calc(){syncOrder();$('o_total').textContent=aed(orderTotal(_o));$('o_bal').textContent=aed(orderBal(_o)-num(val('o_adv')))}
+function syncOrder(){
+ const o=window._o;if(!$('o_cust'))return;
+ o.ref=val('o_ref').trim();o.customer=val('o_cust');o.mobile=val('o_mob');o.date=val('o_date');o.delivery=val('o_del');o.type='bill';o.status=val('o_status');o.notes=val('o_notes');
+ const els=n=>[...document.querySelectorAll(n)];
+ o.items=o.items.map((it,i)=>{const sz={};els('.item')[i].querySelectorAll('.i_m').forEach(e=>{if(e.value)sz[e.dataset.k]=e.value});
+  return Object.assign({},it,{design:els('.i_design')[i].value,emb:els('.i_emb')[i].value,embCost:els('.i_ecost')[i].value,tailorCost:els('.i_tcost')[i].value,cloth:els('.i_cloth')[i].value,clothFrom:els('.i_from')[i].value,qty:els('.i_qty')[i].value,rate:els('.i_rate')[i].value,tailor:els('.i_tailor')[i].value,size:sz,sizeNote:els('.i_sn')[i].value,notes:''})});
+}
+function saveOrder(print){
+ syncOrder();const o=window._o;
+ if(!o.ref)o.ref=billNo(o.no);
+ if(DB.orders.some(x=>x.id!==o.id&&bn(x).toLowerCase()===o.ref.toLowerCase()))return alert('Bill number '+o.ref+' is already used by another bill. Please type a different number.');
+ if(!o.customer.trim())return alert('Enter customer name.');
+ if(!o.mobile.trim())return alert('Enter customer mobile number.');
+ if(!o.delivery)return alert('Enter delivery date.');
+ if(o.items.some(i=>!i.design.trim()))return alert('Enter a design model number for every cloth.');
+ const adv=num(val('o_adv'));if(adv>0)o.payments.push({date:today(),amt:adv,method:val('o_pm')});
+ if(!o.id){o.id=uid();o.no=DB.counter++;DB.orders.push(o)}else DB.orders[DB.orders.findIndex(x=>x.id===o.id)]=o;
+ save();closeModal();toast('Saved '+bn(o));render();
+ if(print)printOrder(o.id);
+}
+function viewOrder(id){
+ const o=DB.orders.find(x=>x.id===id);if(!o)return;
+ const late=o.delivery&&o.delivery<today()&&!['Delivered','Cancelled'].includes(o.status);
+ modal(`<h2>${bn(o)} · ${esc(o.customer)} <span class="pill s-${o.status}">${o.status}</span></h2>
+ <div class="muted" style="margin-bottom:10px">📞 ${esc(o.mobile)} · Date ${fd(o.date)} · Delivery <b ${late?'style="color:var(--bad)"':''}>${fd(o.delivery)}</b></div>
+ <table><tr><th>#</th><th>Model</th><th>Reference photos</th><th>Cloth</th><th>Size</th><th>Tailor</th><th class="r">Qty</th><th class="r">Rate</th><th class="r">Amount</th></tr>
+ ${o.items.map((i,n)=>`<tr><td>${n+1}</td><td><b>${esc(i.design)}</b></td><td>${thumbs(i)}</td><td>${esc(i.cloth)}<br><span class="small muted">${esc(i.clothFrom)} cloth</span></td><td class="small">${sizeText(i)}</td><td>${esc(partyName(i.tailor))}</td><td class="r">${esc(i.qty)}</td><td class="r">${aed(i.rate)}</td><td class="r">${aed(num(i.qty||1)*num(i.rate))}</td></tr>`).join('')}</table>
+ <div class="tot"><span>Total <b>${aed(orderTotal(o))}</b></span><span>Paid <b>${aed(orderPaid(o))}</b></span><span>Balance <b>${aed(orderBal(o))}</b></span></div>
+ ${o.payments.length?`<div class="small muted">Payments: ${o.payments.map(p=>`${fd(p.date)} – ${aed(p.amt)} (${esc(p.method||'')})`).join(' · ')}</div>`:''}
+ ${o.notes?`<div class="small" style="margin-top:6px">Notes: ${esc(o.notes)}</div>`:''}
+ <div class="f" style="margin-top:14px"><div><label>Change status</label><select id="v_status">${STATUSES.map(s=>`<option ${s===o.status?'selected':''}>${s}</option>`).join('')}</select></div>
+ <div><label>Receive payment (AED)</label><input type="number" step="0.01" id="v_pay"></div></div>
+ <div class="actions"><button class="btn danger" onclick="delOrder('${o.id}')">Delete</button><span style="flex:1"></span>
+  <button class="btn ghost" onclick="closeModal();editOrder('${o.id}')">Edit</button><button class="btn ghost" onclick="applyView('${o.id}')">Update</button><button class="btn gold" onclick="printOrder('${o.id}')">🖨 Print</button></div>`);
+}
+function sizeText(i){const s=Object.entries(i.size||{}).map(([k,v])=>`${k}: ${esc(v)}`).join(', ');return [esc(i.sizeNote||''),s].filter(Boolean).join('<br>')}
+function applyView(id){const o=DB.orders.find(x=>x.id===id);o.status=val('v_status');const p=num(val('v_pay'));if(p>0)o.payments.push({date:today(),amt:p,method:'Cash'});save();closeModal();toast('Updated');render()}
+function delOrder(id){const x=DB.orders.find(d=>d.id===id);if(x&&confirm('Delete this bill? You can restore it from Recently Deleted.')){trashPush('order',bn(x)+' · '+x.customer+' · '+aed(orderTotal(x)),x);DB.orders=DB.orders.filter(x=>x.id!==id);save();closeModal();render()}}
+
+/* ================= PRINT BILL ================= */
+function printOrder(id){
+ const o=DB.orders.find(x=>x.id===id);if(!o)return;
+ const isQ=false;
+ $('print').innerHTML=`<div class="bill">
+ <div class="hdr"><div class="en">REGAL FASHION</div><div class="ar">${SHOP.ar}</div><div class="ds">${SHOP.desc}</div><div class="ph">${SHOP.loc} &nbsp;·&nbsp; ${SHOP.phones.join('  &nbsp;|&nbsp;  ')}</div></div><div class="gold"></div>
+ <div class="title"><div class="t">${isQ?'QUOTATION':'INVOICE'}</div><div class="no">No. <b>${bn(o)}</b></div></div>
+ <div class="meta"><div><span>Customer</span><b>${esc(o.customer)}</b></div><div><span>Date</span><b>${fd(o.date)}</b></div><div><span>Mobile</span><b>${esc(o.mobile)}</b></div><div><span>Delivery Date</span><b>${fd(o.delivery)}</b></div></div>
+ <table><tr><th style="width:26px">#</th><th style="text-align:left">MODEL NO</th><th style="text-align:left">CLOTH</th><th style="text-align:left">SIZE / MEASUREMENTS</th><th style="width:34px">QTY</th><th style="width:62px;text-align:right">RATE</th><th style="width:74px;text-align:right">AMOUNT</th></tr>
+ ${o.items.map((i,n)=>`<tr><td>${n+1}</td><td><b>${esc(i.design)}</b></td><td>${esc(i.cloth)||'—'}<div class="sz">${i.clothFrom==='Shop'?'Shop cloth':'Customer cloth'}</div></td><td class="sz">${sizeText(i)||'—'}</td><td style="text-align:center">${esc(i.qty)}</td><td style="text-align:right">${num(i.rate).toFixed(2)}</td><td style="text-align:right"><b>${(num(i.qty||1)*num(i.rate)).toFixed(2)}</b></td></tr>`).join('')}</table>
+ <div class="sum"><div><span>Total</span><span>${aed(orderTotal(o))}</span></div><div><span>Advance Paid</span><span>${aed(orderPaid(o))}</span></div><div class="g"><span>Balance Due</span><span>${aed(orderBal(o))}</span></div></div>
+ ${o.notes?`<div style="margin-top:10px;font-size:11.5px"><b>Notes:</b> ${esc(o.notes)}</div>`:''}
+ <div class="terms"><b>TERMS &amp; CONDITIONS</b><div style="margin-top:3px">• The shop is not responsible for any cloth if not picked up within ${SHOP.months} months after the delivery due date.</div><div>• Please bring this bill when collecting your order. Balance is payable at delivery.</div><div class="ar">• المحل غير مسؤول عن الملابس التي لا يتم استلامها خلال ${SHOP.months} أشهر من تاريخ التسليم المحدد.</div></div>
+ <div class="bank">${SHOP.bank}</div>
+ <div class="sig"><div>CUSTOMER SIGNATURE</div><div>AUTHORIZED SIGNATURE</div></div>
+ <div class="thanks">Thank you for choosing Regal Fashion</div></div>`;
+ closeModal();setTimeout(()=>window.print(),150);
+}
+
+/* ================= CUSTOMERS ================= */
+function vCustomers(m){
+ const map={};DB.orders.forEach(o=>{const k=o.mobile.replace(/\s/g,'')||o.customer;(map[k]=map[k]||{name:o.customer,mobile:o.mobile,orders:[],total:0,bal:0});const c=map[k];c.orders.push(o);if(o.status!=='Cancelled'&&o.type==='bill'){c.total+=orderTotal(o);c.bal+=Math.max(0,orderBal(o))}});
+ const list=Object.values(map).sort((a,b)=>a.name.localeCompare(b.name));
+ m.innerHTML=`<h1>Customers</h1><div class="sub">Built automatically from your orders.</div>
+ ${list.length?`<table><tr><th>Name</th><th>Mobile</th><th class="r">Orders</th><th class="r">Billed</th><th class="r">Balance due</th><th>Models ordered</th></tr>${list.map(c=>`<tr class="click" onclick="go('orders',{q:'${esc(c.mobile||c.name)}'})"><td><b>${esc(c.name)}</b></td><td>${esc(c.mobile)}</td><td class="r">${c.orders.length}</td><td class="r">${aed(c.total)}</td><td class="r" ${c.bal>0?'style="color:var(--bad);font-weight:700"':''}>${aed(c.bal)}</td><td class="small">${esc([...new Set(c.orders.flatMap(o=>o.items.map(i=>i.design)))].join(', '))}</td></tr>`).join('')}</table>`:'<div class="empty">No customers yet.</div>'}`;
+}
+
+/* ================= REPORTS ================= */
+function vReports(m){
+ const ym=state.ym||today().slice(0,7);
+ const inM=o=>o.date.startsWith(ym);
+ const bills=DB.orders.filter(o=>o.type==='bill'&&o.status!=='Cancelled'&&inM(o));
+ const sales=bills.reduce((s,o)=>s+orderTotal(o),0);
+ const collected=DB.orders.flatMap(o=>(o.payments||[]).filter(p=>p.date.startsWith(ym))).reduce((s,p)=>s+num(p.amt),0);
+ const spent=DB.purchases.filter(p=>p.date.startsWith(ym)).reduce((s,p)=>s+num(p.qty||1)*num(p.price),0);
+ const cnt={};DB.orders.filter(o=>o.status!=='Cancelled').forEach(o=>o.items.forEach(i=>{if(i.design){cnt[i.design]=(cnt[i.design]||0)+num(i.qty||1)}}));
+ const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,10);
+ const byCat={};DB.purchases.filter(p=>p.date.startsWith(ym)).forEach(p=>byCat[p.cat]=(byCat[p.cat]||0)+num(p.qty||1)*num(p.price));
+ const tailorCnt={};DB.orders.filter(o=>o.status!=='Cancelled'&&inM(o)).forEach(o=>o.items.forEach(i=>{const n=partyName(i.tailor);if(n)tailorCnt[n]=(tailorCnt[n]||0)+num(i.qty||1)}));
+ m.innerHTML=`<h1>Reports</h1><div class="sub">Monthly summary.</div>
+ <div class="bar"><label>Month</label><input type="month" value="${ym}" onchange="state.ym=this.value;vReports($('main'))"></div>
+ <div class="grid stats"><div class="card stat ok"><div class="n" style="font-size:22px">${aed(sales)}</div><div class="l">Billed this month (${bills.length} bills)</div></div>
+ <div class="card stat"><div class="n" style="font-size:22px">${aed(collected)}</div><div class="l">Payments received</div></div>
+ <div class="card stat warn"><div class="n" style="font-size:22px">${aed(spent)}</div><div class="l">Purchases &amp; costs</div></div>
+ <div class="card stat"><div class="n" style="font-size:22px">${aed(sales-spent)}</div><div class="l">Billed minus costs</div></div></div>
+ <div class="two"><div class="card"><h3 style="margin-top:0;color:var(--plum)">Most ordered designs (all time)</h3>${top.map(([k,v])=>`<div class="list-row"><span><b>${esc(k)}</b></span><span>${v} pcs</span></div>`).join('')||'<div class="muted">No data.</div>'}</div>
+ <div class="card"><h3 style="margin-top:0;color:var(--plum)">Costs by category</h3>${Object.entries(byCat).map(([k,v])=>`<div class="list-row"><span>${esc(k)}</span><span>${aed(v)}</span></div>`).join('')||'<div class="muted">No data.</div>'}
+ <h3 style="color:var(--plum)">Pieces per tailor (this month)</h3>${Object.entries(tailorCnt).map(([k,v])=>`<div class="list-row"><span>${esc(k)}</span><span>${v} pcs</span></div>`).join('')||'<div class="muted">Assign tailors on orders to see this.</div>'}</div></div>`;
+}
+
+
+
+/* ================= PASSWORD FOR RECENTLY DELETED ================= */
+const PWK='regal_trash_pw_v1';let trashUnlocked=false;
+function pwGet(){try{return JSON.parse(localStorage.getItem(PWK))}catch(e){return null}}
+function pwSet(o){try{localStorage.setItem(PWK,JSON.stringify(o))}catch(e){alert('Could not save password.')}}
+async function hashPw(p,salt){const t=salt+'|'+p;
+ if(window.crypto&&crypto.subtle){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+ let h1=0xdeadbeef,h2=0x41c6ce57;for(let i=0;i<t.length;i++){const c=t.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677)}
+ h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return(h2>>>0).toString(16)+(h1>>>0).toString(16)}
+function newRecovery(){const a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let r='';const v=new Uint32Array(10);(window.crypto||{getRandomValues:x=>x.forEach((_,i)=>x[i]=Math.random()*4e9)}).getRandomValues(v);v.forEach((n,i)=>{r+=a[n%a.length];if(i===4)r+='-'});return r}
+function vTrashLock(m){
+ const has=!!pwGet();
+ m.innerHTML=`<h1>Recently Deleted</h1><div class="sub">🔒 This area is password protected.</div><div class="card" style="max-width:420px">
+ ${has?`<label class="small muted" style="font-weight:600">Password</label><input type="password" id="pw1"><div class="actions" style="align-items:center"><a href="#" class="small" style="margin-right:auto" onclick="forgotPw();return false">Forgot password?</a><button class="btn" onclick="tryUnlock()">Unlock</button></div>`
+ :`<div class="small muted" style="margin-bottom:10px">First time – create a password to protect deleted items.</div><label class="small muted" style="font-weight:600">New password (min 4 characters)</label><input type="password" id="pw1"><label class="small muted" style="font-weight:600;display:block;margin-top:8px">Confirm password</label><input type="password" id="pw2"><div class="actions"><button class="btn" onclick="setupPw()">Create password</button></div>`}</div>`;
+ const i=$('pw1');if(i){i.focus();i.addEventListener('keydown',e=>{if(e.key==='Enter')has?tryUnlock():setupPw()})}
+}
+async function setupPw(){
+ const a=val('pw1'),b=val('pw2');if(a.length<4)return alert('Password must be at least 4 characters.');if(a!==b)return alert('The two passwords do not match.');
+ const salt=uid(),rc=newRecovery();pwSet({salt,hash:await hashPw(a,salt),rhash:await hashPw(rc.replace(/-/g,''),salt)});trashUnlocked=true;
+ modal(`<h2>Password created ✔</h2><p>Write down this <b>recovery code</b> and keep it somewhere safe. It is the only way to reset the password if you forget it.</p><div style="font-size:26px;letter-spacing:3px;font-weight:700;text-align:center;padding:14px;background:#eef3fb;border-radius:10px;color:var(--plum)">${rc}</div><p class="small muted">It will not be shown again.</p><div class="actions"><button class="btn" onclick="closeModal();render()">I have saved it</button></div>`,true);
+}
+async function tryUnlock(){const p=pwGet();if(!p)return render();if(await hashPw(val('pw1'),p.salt)===p.hash){trashUnlocked=true;render()}else{alert('Wrong password.');$('pw1').value='';$('pw1').focus()}}
+function forgotPw(){modal(`<h2>Reset password</h2><div class="f"><div class="full"><label>Recovery code</label><input id="rc" placeholder="XXXXX-XXXXX"></div><div><label>New password</label><input type="password" id="np1"></div><div><label>Confirm</label><input type="password" id="np2"></div></div><div class="actions"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="doReset()">Reset password</button></div>`,true)}
+async function doReset(){const p=pwGet(),a=val('np1');if(a.length<4)return alert('Password must be at least 4 characters.');if(a!==val('np2'))return alert('The two passwords do not match.');
+ if(await hashPw(val('rc').toUpperCase().replace(/[\s-]/g,''),p.salt)!==p.rhash)return alert('Recovery code is not correct.');
+ p.hash=await hashPw(a,p.salt);pwSet(p);trashUnlocked=true;closeModal();toast('Password reset');render()}
+function changePwForm(){modal(`<h2>Change password</h2><div class="f"><div class="full"><label>Current password</label><input type="password" id="cp0"></div><div><label>New password</label><input type="password" id="cp1"></div><div><label>Confirm</label><input type="password" id="cp2"></div></div><div class="actions"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="doChangePw()">Change password</button></div>`,true)}
+async function doChangePw(){const p=pwGet();if(!p)return;if(await hashPw(val('cp0'),p.salt)!==p.hash)return alert('Current password is wrong.');const a=val('cp1');if(a.length<4)return alert('Password must be at least 4 characters.');if(a!==val('cp2'))return alert('The two passwords do not match.');
+ p.hash=await hashPw(a,p.salt);pwSet(p);closeModal();toast('Password changed')}
+function lockTrash(){trashUnlocked=false;go('dash')}
+
+/* ================= RECENTLY DELETED ================= */
+function vTrash(m){
+ if(!trashUnlocked)return vTrashLock(m);
+ const tp=state.type||'';const list=DB.trash.filter(t=>!tp||t.kind===tp);
+ m.innerHTML=`<h1>Recently Deleted</h1><div class="sub">Everything you delete goes here first. Restore it with one click if it was deleted by mistake.</div>
+ <div class="bar"><select onchange="state.type=this.value;vTrash($('main'))"><option value="">All types</option>${Object.entries(TRASH_NAME).map(([k,v])=>`<option value="${k}" ${k===tp?'selected':''}>${v}</option>`).join('')}</select><span class="sp"></span><button class="btn ghost" onclick="changePwForm()">🔑 Change password</button><button class="btn ghost" onclick="lockTrash()">🔒 Lock</button>${DB.trash.length?`<button class="btn danger" onclick="emptyTrash()">Empty recently deleted</button>`:''}</div>
+ ${list.length?`<table><tr><th>Deleted on</th><th>Type</th><th>Details</th><th class="r"></th></tr>${list.map(t=>`<tr><td>${new Date(t.date).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}</td><td><span class="pill">${TRASH_NAME[t.kind]||t.kind}</span></td><td>${esc(t.label)}${t.kind==='order'?`<br><span class="small muted">${esc(t.data.mobile)} · ${t.data.items.length} cloth(s) · Delivery ${fd(t.data.delivery)}</span>`:''}</td><td class="r"><button class="btn gold sm" onclick="restoreTrash('${t.id}')">↩ Restore</button> <button class="btn danger sm" onclick="purgeTrash('${t.id}')">Delete forever</button></td></tr>`).join('')}</table>`:'<div class="empty">Nothing deleted recently.</div>'}`;
+}
+function restoreTrash(id){
+ const t=DB.trash.find(x=>x.id===id);if(!t)return;const col=DB[TRASH_COL[t.kind]];
+ if(t.kind==='order'){if(DB.orders.some(o=>bn(o).toLowerCase()===bn(t.data).toLowerCase())){t.data.ref=bn(t.data)+'-R';alert('That bill number is now used by another bill, so it was restored as '+t.data.ref+'.')}}
+ if(t.kind==='design'&&DB.designs.some(d=>d.model.toLowerCase()===t.data.model.toLowerCase())){return alert('A design with model number '+t.data.model+' already exists.')}
+ col.push(t.data);DB.trash=DB.trash.filter(x=>x.id!==id);save();toast('Restored');render();
+}
+function purgePhotos(t){const ks=[];if(t.kind==='design'&&t.data.photo)ks.push(t.data.photo);if(t.kind==='order')t.data.items.forEach(i=>{if(i.clothPhoto)ks.push(i.clothPhoto)});ks.forEach(k=>{if(String(k).startsWith('ph_'))phDel(k)})}
+function purgeTrash(id){const t=DB.trash.find(x=>x.id===id);if(t&&confirm('Delete this permanently? It can no longer be restored.')){purgePhotos(t);DB.trash=DB.trash.filter(x=>x.id!==id);save();render()}}
+function emptyTrash(){if(confirm('Permanently delete everything in Recently Deleted? This cannot be undone.')){DB.trash.forEach(purgePhotos);DB.trash=[];save();render()}}
+
+/* ================= BACKUP ================= */
+function vBackup(m){
+ m.innerHTML=`<h1>Backup &amp; Settings</h1><div class="sub">Your data lives only on this computer. Please take a backup regularly (e.g. every week) and keep it on a USB / cloud drive.</div>
+ <div class="grid" style="max-width:640px">
+ <div class="card"><h3 style="margin-top:0;color:var(--plum)">Backup</h3><button class="btn" onclick="doBackup()">⬇ Download backup file</button></div>
+ <div class="card"><h3 style="margin-top:0;color:var(--plum)">Restore</h3><div class="muted small" style="margin-bottom:8px">This replaces all current data with the backup.</div><input type="file" accept=".json" onchange="doRestore(this)"></div>
+ <div class="card"><h3 style="margin-top:0;color:var(--plum)">Next bill number</h3><div class="bar"><input type="number" id="s_cnt" value="${DB.counter}" min="1" style="width:120px"><button class="btn ghost" onclick="DB.counter=Math.max(1,parseInt(val('s_cnt'))||1);save();toast('Saved')">Set</button></div></div>
+ <div class="card"><h3 style="margin-top:0;color:var(--plum)">Shop details on bill</h3><div class="small">${SHOP.name} · ${SHOP.loc}<br>${SHOP.phones.join(' / ')}<br>${SHOP.bank}</div></div>
+ <div class="card"><h3 style="margin-top:0;color:var(--bad)">Danger zone</h3><button class="btn danger" onclick="if(confirm('Delete ALL data? This cannot be undone.')&&confirm('Really delete everything?')){DB=blank();phReplace({});save();render()}">Erase all data</button></div></div>`;
+}
+function doBackup(){const b=new Blob([JSON.stringify(DB)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='regal-fashion-backup-'+today()+'.json';a.click();toast('Backup downloaded')}
+function doRestore(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.orders||!d.designs)throw 0;if(confirm('Replace all current data with this backup?')){const ph=d._photos;delete d._photos;DB=normalize(Object.assign(blank(),d));phReplace(ph||{}).then(()=>{save();migratePhotos();toast('Restored');render()})}}catch(e){alert('This is not a valid backup file.')}};r.readAsText(f)}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+render();
+phLoadAll().then(()=>{migratePhotos();render()});
+</script>
+</body>
+</html>
