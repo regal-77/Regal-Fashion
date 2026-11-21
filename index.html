@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <title>Regal Fashion – Ladies Tailoring & Embroidery</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#14284b">
 <style>
 :root{--plum:#14284b;--plum2:#1f3a6b;--gold:#b8923f;--gold2:#e6d4a6;--bg:#f4f6fa;--card:#fff;--ink:#1c2430;--mut:#667085;--line:#dfe5ee;--ok:#1f7a4d;--warn:#b86e0a;--bad:#b3261e}
 *{box-sizing:border-box}
@@ -118,6 +121,54 @@ td.r,th.r{text-align:right}
 #login .box input{text-align:center;font-size:18px;letter-spacing:4px;margin-bottom:12px}
 #login .box .err{color:var(--bad);font-size:12.5px;min-height:18px;margin-bottom:8px}
 #login .box button{width:100%}
+.mtop,#mbg{display:none}
+/* MOBILE (Android / iPhone) */
+@media screen and (max-width:820px){
+ html,body{font-size:15px;-webkit-text-size-adjust:100%}
+ #app{height:100vh;height:100dvh}
+ aside{position:fixed;left:0;top:0;bottom:0;width:260px;max-width:82vw;z-index:70;transform:translateX(-102%);transition:transform .25s ease;padding-bottom:env(safe-area-inset-bottom)}
+ body.menu-open aside{transform:translateX(0);box-shadow:0 0 40px rgba(0,0,0,.5)}
+ #mbg{position:fixed;inset:0;background:rgba(8,18,40,.55);z-index:60}
+ body.menu-open #mbg{display:block}
+ .mtop{display:flex;position:fixed;top:0;left:0;right:0;height:54px;z-index:30;background:var(--plum);color:var(--gold2);align-items:center;gap:12px;padding:0 12px;border-bottom:2px solid var(--gold)}
+ .mtop button{background:none;border:0;color:#fff;font-size:26px;line-height:1;padding:6px 8px;cursor:pointer}
+ .mtop b{font-family:Georgia,serif;font-size:19px;letter-spacing:1.5px}
+ nav button{padding:13px 12px;font-size:15px}
+ main{padding:68px 12px calc(24px + env(safe-area-inset-bottom));width:100%;-webkit-overflow-scrolling:touch}
+ h1{font-size:21px}
+ .sub{font-size:13px;margin-bottom:12px}
+ .bar{gap:8px}
+ .bar input,.bar select{flex:1 1 100%;width:100%;min-width:0}
+ .bar .sp{display:none}
+ .bar .btn{flex:1 1 auto}
+ input,select,textarea{font-size:16px;padding:10px}
+ button.btn{padding:11px 14px}
+ button.sm{padding:8px 12px;font-size:13px}
+ .stats{grid-template-columns:1fr 1fr;gap:10px}
+ .stat .n{font-size:22px}
+ .stat .l{font-size:10.5px}
+ .card{padding:12px}
+ .two{grid-template-columns:1fr}
+ .cards{grid-template-columns:1fr 1fr;gap:10px}
+ .dcard .ph{height:130px}
+ table{display:block;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;border-radius:10px}
+ th,td{padding:9px 10px}
+ .modal-bg{padding:0;align-items:stretch}
+ .modal{max-width:100%;min-height:100%;border-radius:0;padding:16px 14px calc(24px + env(safe-area-inset-bottom));box-shadow:none}
+ .modal.narrow{max-width:100%}
+ .f{grid-template-columns:1fr 1fr;gap:10px}
+ .meas{grid-template-columns:1fr 1fr 1fr;gap:6px}
+ .refrow{grid-template-columns:1fr}
+ .tot{flex-wrap:wrap;gap:8px 18px;justify-content:flex-start}
+ .actions .btn{flex:1 1 auto}
+ .list-row{gap:10px}
+ .toast{left:12px;right:12px;bottom:calc(20px + env(safe-area-inset-bottom));text-align:center}
+ #login .box{padding:24px 18px}
+}
+@media screen and (max-width:420px){
+ .f{grid-template-columns:1fr}
+ .cards{grid-template-columns:1fr}
+}
 /* PRINT */
 #print{display:none}
 @media print{
@@ -133,6 +184,8 @@ td.r,th.r{text-align:right}
  <input type="password" id="lg_pw" placeholder="Password" inputmode="numeric" autocomplete="off">
  <div class="err" id="lg_err"></div>
  <button class="btn gold" onclick="doLogin()">Login</button></div></div>
+<div class="mtop"><button onclick="toggleMenu()" aria-label="Menu">☰</button><b>REGAL FASHION</b></div>
+<div id="mbg" onclick="toggleMenu(false)"></div>
 <div id="app">
 <aside>
  <div class="brand"><b>REGAL FASHION</b><span>LADIES TAILORING &amp; EMBROIDERY · AL AIN</span></div>
@@ -217,7 +270,8 @@ function toast(m){const t=document.createElement('div');t.className='toast';t.te
 /* ================= NAV ================= */
 const VIEWS=[['dash','🏠','Dashboard'],['orders','🧾','Orders & Bills'],['work','🧵','Work Tracker'],['designs','🌸','Design Catalogue'],['parties','🤝','Suppliers & Tailors'],['purch','🛒','Purchases'],['customers','👩','Customers'],['reports','📊','Reports'],['trash','🗑','Recently Deleted'],['backup','💾','Backup & Settings']];
 let view='dash',state={};
-function go(v,s){if(v!=='trash')trashUnlocked=false;view=v;state=s||{};render()}
+function toggleMenu(on){document.body.classList.toggle('menu-open',typeof on==='boolean'?on:undefined)}
+function go(v,s){if(v!=='trash')trashUnlocked=false;view=v;state=s||{};toggleMenu(false);render()}
 function render(){
  document.getElementById('nav').innerHTML=VIEWS.map(([k,i,l])=>`<button class="${k===view?'on':''}" onclick="go('${k}')"><span>${i}</span>${l}</button>`).join('');
  const m=document.getElementById('main');
@@ -507,8 +561,10 @@ function saveOrder(print){
  if(!o.delivery)return alert('Enter delivery date.');
  if(o.items.some(i=>!i.design.trim()))return alert('Enter a design model number for every cloth.');
  const adv=num(val('o_adv'));if(adv>0)o.payments.push({date:today(),amt:adv,method:val('o_pm')});
+ const isNew=!o.id;
  if(!o.id){o.id=uid();o.no=DB.counter++;DB.orders.push(o)}else DB.orders[DB.orders.findIndex(x=>x.id===o.id)]=o;
  save();closeModal();toast('Saved '+bn(o));render();
+ if(isNew)sendBill(o.id);
  if(print)printOrder(o.id);
 }
 function viewOrder(id){
@@ -524,11 +580,38 @@ function viewOrder(id){
  <div class="f" style="margin-top:14px"><div><label>Change status</label><select id="v_status">${STATUSES.map(s=>`<option ${s===o.status?'selected':''}>${s}</option>`).join('')}</select></div>
  <div><label>Receive payment (AED)</label><input type="number" step="0.01" id="v_pay"></div></div>
  <div class="actions"><button class="btn danger" onclick="delOrder('${o.id}')">Delete</button><span style="flex:1"></span>
-  <button class="btn ghost" onclick="closeModal();editOrder('${o.id}')">Edit</button><button class="btn ghost" onclick="applyView('${o.id}')">Update</button><button class="btn gold" onclick="printOrder('${o.id}')">🖨 Print</button></div>`);
+  <button class="btn ghost" onclick="closeModal();editOrder('${o.id}')">Edit</button><button class="btn ghost" onclick="applyView('${o.id}')">Update</button><button class="btn ghost" onclick="sendBill('${o.id}')">📲 Send on WhatsApp</button><button class="btn gold" onclick="printOrder('${o.id}')">🖨 Print</button></div>`);
 }
 function sizeText(i){const s=Object.entries(i.size||{}).map(([k,v])=>`${k}: ${esc(v)}`).join(', ');return [esc(i.sizeNote||''),s].filter(Boolean).join('<br>')}
 function applyView(id){const o=DB.orders.find(x=>x.id===id);o.status=val('v_status');const p=num(val('v_pay'));if(p>0)o.payments.push({date:today(),amt:p,method:'Cash'});save();closeModal();toast('Updated');render()}
 function delOrder(id){const x=DB.orders.find(d=>d.id===id);if(x&&confirm('Delete this bill? You can restore it from Recently Deleted.')){trashPush('order',bn(x)+' · '+x.customer+' · '+aed(orderTotal(x)),x);DB.orders=DB.orders.filter(x=>x.id!==id);save();closeModal();render()}}
+
+
+/* ================= SEND BILL TO CUSTOMER (WhatsApp) ================= */
+function waNumber(m){
+ const raw=String(m||'').trim();let d=raw.replace(/\D/g,'');
+ if(raw.startsWith('+')||d.startsWith('00')){if(d.startsWith('00'))d=d.slice(2);if(d.startsWith('9710'))d='971'+d.slice(4);return d}  /* number typed with country code */
+ if(d.startsWith('9710'))return '971'+d.slice(4);
+ if(d.startsWith('971'))return d;
+ if(d.startsWith('0'))return '971'+d.replace(/^0+/,'');
+ if(d.length===9)return '971'+d;   /* 5xxxxxxxx */
+ return d;                         /* already full international number */
+}
+function billText(o){
+ const L=['*'+SHOP.name+'*',SHOP.desc,SHOP.loc,'',
+  '*INVOICE No. '+bn(o)+'*','Date: '+fd(o.date),'Customer: '+o.customer,'Delivery Date: '+fd(o.delivery),'',
+  ...o.items.map((i,n)=>(n+1)+'. Model '+i.design+(i.cloth?' ('+i.cloth+')':'')+' x'+(i.qty||1)+' = '+aed(num(i.qty||1)*num(i.rate))),'',
+  'Total: '+aed(orderTotal(o)),'Advance Paid: '+aed(orderPaid(o)),'*Balance Due: '+aed(orderBal(o))+'*'];
+ if(o.notes)L.push('','Notes: '+o.notes);
+ L.push('','Please bring this bill when collecting your order. Balance is payable at delivery.','Thank you for choosing '+SHOP.name+' 🌸');
+ return L.join('\n');
+}
+function sendBill(id){
+ const o=DB.orders.find(x=>x.id===id);if(!o)return;
+ if(!String(o.mobile||'').replace(/\D/g,''))return alert('Customer mobile number missing.');
+ const to=waNumber(o.mobile);toast('WhatsApp → '+o.customer+' (+'+to+')');
+ window.open('https://wa.me/'+to+'?text='+encodeURIComponent(billText(o)),'_blank');
+}
 
 /* ================= PRINT BILL ================= */
 function printOrder(id){
@@ -591,26 +674,13 @@ async function hashPw(p,salt){const t=salt+'|'+p;
  let h1=0xdeadbeef,h2=0x41c6ce57;for(let i=0;i<t.length;i++){const c=t.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677)}
  h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return(h2>>>0).toString(16)+(h1>>>0).toString(16)}
 function newRecovery(){const a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let r='';const v=new Uint32Array(10);(window.crypto||{getRandomValues:x=>x.forEach((_,i)=>x[i]=Math.random()*4e9)}).getRandomValues(v);v.forEach((n,i)=>{r+=a[n%a.length];if(i===4)r+='-'});return r}
+const TRASH_PW='111645';
 function vTrashLock(m){
- const has=!!pwGet();
  m.innerHTML=`<h1>Recently Deleted</h1><div class="sub">🔒 This area is password protected.</div><div class="card" style="max-width:420px">
- ${has?`<label class="small muted" style="font-weight:600">Password</label><input type="password" id="pw1"><div class="actions" style="align-items:center"><a href="#" class="small" style="margin-right:auto" onclick="forgotPw();return false">Forgot password?</a><button class="btn" onclick="tryUnlock()">Unlock</button></div>`
- :`<div class="small muted" style="margin-bottom:10px">First time – create a password to protect deleted items.</div><label class="small muted" style="font-weight:600">New password (min 4 characters)</label><input type="password" id="pw1"><label class="small muted" style="font-weight:600;display:block;margin-top:8px">Confirm password</label><input type="password" id="pw2"><div class="actions"><button class="btn" onclick="setupPw()">Create password</button></div>`}</div>`;
- const i=$('pw1');if(i){i.focus();i.addEventListener('keydown',e=>{if(e.key==='Enter')has?tryUnlock():setupPw()})}
+ <label class="small muted" style="font-weight:600">Password</label><input type="password" id="pw1" inputmode="numeric" autocomplete="off"><div class="actions" style="align-items:center"><button class="btn" onclick="tryUnlock()">Unlock</button></div></div>`;
+ const i=$('pw1');if(i){i.focus();i.addEventListener('keydown',e=>{if(e.key==='Enter')tryUnlock()})}
 }
-async function setupPw(){
- const a=val('pw1'),b=val('pw2');if(a.length<4)return alert('Password must be at least 4 characters.');if(a!==b)return alert('The two passwords do not match.');
- const salt=uid(),rc=newRecovery();pwSet({salt,hash:await hashPw(a,salt),rhash:await hashPw(rc.replace(/-/g,''),salt)});trashUnlocked=true;
- modal(`<h2>Password created ✔</h2><p>Write down this <b>recovery code</b> and keep it somewhere safe. It is the only way to reset the password if you forget it.</p><div style="font-size:26px;letter-spacing:3px;font-weight:700;text-align:center;padding:14px;background:#eef3fb;border-radius:10px;color:var(--plum)">${rc}</div><p class="small muted">It will not be shown again.</p><div class="actions"><button class="btn" onclick="closeModal();render()">I have saved it</button></div>`,true);
-}
-async function tryUnlock(){const p=pwGet();if(!p)return render();if(await hashPw(val('pw1'),p.salt)===p.hash){trashUnlocked=true;render()}else{alert('Wrong password.');$('pw1').value='';$('pw1').focus()}}
-function forgotPw(){modal(`<h2>Reset password</h2><div class="f"><div class="full"><label>Recovery code</label><input id="rc" placeholder="XXXXX-XXXXX"></div><div><label>New password</label><input type="password" id="np1"></div><div><label>Confirm</label><input type="password" id="np2"></div></div><div class="actions"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="doReset()">Reset password</button></div>`,true)}
-async function doReset(){const p=pwGet(),a=val('np1');if(a.length<4)return alert('Password must be at least 4 characters.');if(a!==val('np2'))return alert('The two passwords do not match.');
- if(await hashPw(val('rc').toUpperCase().replace(/[\s-]/g,''),p.salt)!==p.rhash)return alert('Recovery code is not correct.');
- p.hash=await hashPw(a,p.salt);pwSet(p);trashUnlocked=true;closeModal();toast('Password reset');render()}
-function changePwForm(){modal(`<h2>Change password</h2><div class="f"><div class="full"><label>Current password</label><input type="password" id="cp0"></div><div><label>New password</label><input type="password" id="cp1"></div><div><label>Confirm</label><input type="password" id="cp2"></div></div><div class="actions"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="doChangePw()">Change password</button></div>`,true)}
-async function doChangePw(){const p=pwGet();if(!p)return;if(await hashPw(val('cp0'),p.salt)!==p.hash)return alert('Current password is wrong.');const a=val('cp1');if(a.length<4)return alert('Password must be at least 4 characters.');if(a!==val('cp2'))return alert('The two passwords do not match.');
- p.hash=await hashPw(a,p.salt);pwSet(p);closeModal();toast('Password changed')}
+function tryUnlock(){if(val('pw1').trim()===TRASH_PW){trashUnlocked=true;render()}else{alert('Wrong password.');$('pw1').value='';$('pw1').focus()}}
 function lockTrash(){trashUnlocked=false;go('dash')}
 
 /* ================= RECENTLY DELETED ================= */
@@ -618,7 +688,7 @@ function vTrash(m){
  if(!trashUnlocked)return vTrashLock(m);
  const tp=state.type||'';const list=DB.trash.filter(t=>!tp||t.kind===tp);
  m.innerHTML=`<h1>Recently Deleted</h1><div class="sub">Everything you delete goes here first. Restore it with one click if it was deleted by mistake.</div>
- <div class="bar"><select onchange="state.type=this.value;vTrash($('main'))"><option value="">All types</option>${Object.entries(TRASH_NAME).map(([k,v])=>`<option value="${k}" ${k===tp?'selected':''}>${v}</option>`).join('')}</select><span class="sp"></span><button class="btn ghost" onclick="changePwForm()">🔑 Change password</button><button class="btn ghost" onclick="lockTrash()">🔒 Lock</button>${DB.trash.length?`<button class="btn danger" onclick="emptyTrash()">Empty recently deleted</button>`:''}</div>
+ <div class="bar"><select onchange="state.type=this.value;vTrash($('main'))"><option value="">All types</option>${Object.entries(TRASH_NAME).map(([k,v])=>`<option value="${k}" ${k===tp?'selected':''}>${v}</option>`).join('')}</select><span class="sp"></span><button class="btn ghost" onclick="lockTrash()">🔒 Lock</button>${DB.trash.length?`<button class="btn danger" onclick="emptyTrash()">Empty recently deleted</button>`:''}</div>
  ${list.length?`<table><tr><th>Deleted on</th><th>Type</th><th>Details</th><th class="r"></th></tr>${list.map(t=>`<tr><td>${new Date(t.date).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}</td><td><span class="pill">${TRASH_NAME[t.kind]||t.kind}</span></td><td>${esc(t.label)}${t.kind==='order'?`<br><span class="small muted">${esc(t.data.mobile)} · ${t.data.items.length} cloth(s) · Delivery ${fd(t.data.delivery)}</span>`:''}</td><td class="r"><button class="btn gold sm" onclick="restoreTrash('${t.id}')">↩ Restore</button> <button class="btn danger sm" onclick="purgeTrash('${t.id}')">Delete forever</button></td></tr>`).join('')}</table>`:'<div class="empty">Nothing deleted recently.</div>'}`;
 }
 function restoreTrash(id){
@@ -635,6 +705,7 @@ function emptyTrash(){if(confirm('Permanently delete everything in Recently Dele
 function vBackup(m){
  m.innerHTML=`<h1>Backup &amp; Settings</h1><div class="sub">Your data lives only on this computer. Please take a backup regularly (e.g. every week) and keep it on a USB / cloud drive.</div>
  <div class="grid" style="max-width:640px">
+ <div class="card"><h3 style="margin-top:0;color:var(--plum)">Account</h3><button class="btn ghost" onclick="doLogout()">🚪 Logout</button></div>
  <div class="card"><h3 style="margin-top:0;color:var(--plum)">Backup</h3><button class="btn" onclick="doBackup()">⬇ Download backup file</button></div>
  <div class="card"><h3 style="margin-top:0;color:var(--plum)">Restore</h3><div class="muted small" style="margin-bottom:8px">This replaces all current data with the backup.</div><input type="file" accept=".json" onchange="doRestore(this)"></div>
  <div class="card"><h3 style="margin-top:0;color:var(--plum)">Next bill number</h3><div class="bar"><input type="number" id="s_cnt" value="${DB.counter}" min="1" style="width:120px"><button class="btn ghost" onclick="DB.counter=Math.max(1,parseInt(val('s_cnt'))||1);save();toast('Saved')">Set</button></div></div>
